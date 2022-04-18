@@ -1,11 +1,8 @@
-/* eslint-disable array-callback-return */
 webix.protoUI({
 	name: "autoform",
 	$init(config) {
 		config.elements = [];
-		config.fields.map((el) => {
-			config.elements.push({view: "text", label: el, name: el, invalidMessage: "Is not be empty"});
-		});
+		config.fields.map(el => config.elements.push({view: "text", label: el, name: el, invalidMessage: "Is not be empty"}));
 		config.elements.push({view: "toolbar",
 			css: "borderless",
 			cols: [

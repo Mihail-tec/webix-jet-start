@@ -1,6 +1,4 @@
-/* eslint-disable linebreak-style */
 import {JetView} from "webix-jet";
-
 
 export default class Settings extends JetView {
 	config() {

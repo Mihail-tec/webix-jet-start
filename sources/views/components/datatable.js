@@ -1,6 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable eqeqeq */
-/* eslint-disable func-names */
 import {JetView} from "webix-jet";
 import "./autoForm";
 
@@ -17,7 +14,7 @@ export default class DataTableView extends JetView {
 		return this.dataItems.waitData.then(() => {
 			const data = this.dataItems;
 			const obj = data.getItem(data.getFirstId());
-			const fields = Object.keys(obj).filter(key => key != "id");
+			const fields = Object.keys(obj).filter(key => key !== "id");
 
 			const table = {
 				localId: "table",
@@ -48,15 +45,15 @@ export default class DataTableView extends JetView {
 				view: "autoform",
 				fields,
 				actionSave(values) {
-					const form = thisScope.$$("form");
-					if (form.validate()) {
+					const formInf = thisScope.$$("form");
+					if (formInf.validate()) {
 						if (data.exists(values.id)) {
 							data.updateItem(values.id, values);
 						}
 						else {
 							data.add(values);
 						}
-						form.clear();
+						formInf.clear();
 						thisScope.$$("table").clearSelection();
 					}
 				},

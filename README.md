@@ -1,1 +1,1 @@
-# webix-jet-start
+Webix Jet Demo App

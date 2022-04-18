@@ -1,7 +1,7 @@
 import {JetView} from "webix-jet";
 
-import {countries} from "../models/countries";
-import {statuses} from "../models/statuses";
+import countries from "../models/countries";
+import statuses from "../models/statuses";
 import DataTableView from "./components/datatable";
 
 export default class DataView extends JetView {

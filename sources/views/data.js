@@ -1,7 +1,7 @@
 import {JetView} from "webix-jet";
 
-import countries from "../models/countries";
-import statuses from "../models/statuses";
+import countriesCollection from "../models/countries";
+import statusesCollection from "../models/statuses";
 import DataTableView from "./components/datatable";
 
 export default class DataView extends JetView {
@@ -13,9 +13,7 @@ export default class DataView extends JetView {
 				{id: "statuses", value: "Statuses"}
 			],
 			on: {
-				onChange(nextId) {
-					this.$scope.$$(nextId).show();
-				}
+				onChange: id => this.$$(id).show()
 			}
 		};
 
@@ -38,25 +36,6 @@ export default class DataView extends JetView {
 			Name: webix.rules.isNotEmpty,
 			Icon: webix.rules.isNotEmpty
 		};
-
-		const countriesCollection = new webix.DataCollection({
-			url() {
-				const promisedData = webix.promise.defer();
-				promisedData.resolve(
-					countries
-				);
-				return promisedData;
-			}
-		});
-
-		const statusesCollection = new webix.DataCollection({
-			url() {
-				const promisedData = webix.promise.defer();
-				promisedData.resolve(statuses);
-				return promisedData;
-			}
-		});
-
 
 		return {
 			localId: "cells_data",

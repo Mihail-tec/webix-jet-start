@@ -25,7 +25,8 @@ export default class ContactsView extends JetView {
 						{view: "button", value: "Save", css: "webix_primary", click: () => this.save()},
 						{view: "button", value: "Clear", css: "webix_danger", click: () => this.clear()}
 					]
-				}
+				},
+				{}
 
 			]
 		};

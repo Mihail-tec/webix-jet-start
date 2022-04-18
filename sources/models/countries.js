@@ -4,4 +4,10 @@ const countries = [
 	{id: 3, Name: "Italy"}
 ];
 
-export default countries;
+const countriesCollection = new webix.DataCollection({
+	url() {
+		const promisedData = webix.promise.resolve(countries);
+		return promisedData;
+	}
+});
+export default countriesCollection;

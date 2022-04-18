@@ -20,7 +20,6 @@ export default class DataTableView extends JetView {
 				view: "datatable",
 				columns: this.columns,
 				select: true,
-				height: 500,
 				onClick: {
 					"wxi-trash": (e, id) => {
 						webix.confirm("Are you sure?").then(() => {

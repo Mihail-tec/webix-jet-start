@@ -3,4 +3,10 @@ const statuses = [
 	{id: 2, Name: "Open", Icon: "user"}
 ];
 
-export default statuses;
+const statusesCollection = new webix.DataCollection({
+	url() {
+		const promisedData = webix.promise.resolve(statuses);
+		return promisedData;
+	}
+});
+export default statusesCollection;

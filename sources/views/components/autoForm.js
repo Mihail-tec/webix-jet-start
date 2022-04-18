@@ -8,6 +8,6 @@ webix.protoUI({
 			cols: [
 				{view: "button", value: "Cancel", css: "webix_danger", click: config.actionCancel},
 				{view: "button", value: "Save", css: "webix_primary", align: "right", click: () => config.actionSave(this.getValues())}
-			]});
+			]}, {});
 	}
 }, webix.ui.form);

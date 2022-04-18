@@ -15,7 +15,6 @@ export default class DataTableView extends JetView {
 			const data = this.dataItems;
 			const obj = data.getItem(data.getFirstId());
 			const fields = Object.keys(obj).filter(key => key !== "id");
-
 			const table = {
 				localId: "table",
 				view: "datatable",
@@ -23,29 +22,28 @@ export default class DataTableView extends JetView {
 				select: true,
 				height: 500,
 				onClick: {
-					"wxi-trash": function (e, id) {
+					"wxi-trash": (e, id) => {
 						webix.confirm("Are you sure?").then(() => {
 							data.remove(id);
-							this.$scope.$$("form").clear();
+							this.$$("form").clear();
 							return false;
 						});
 					}
 				},
 				on: {
-					onAfterSelect(item) {
-						const form = this.$scope.$$("form");
+					onAfterSelect: (item) => {
+						const form = this.$$("form");
 						form.setValues(data.getItem(item.id));
 					}
 				}
 			};
 
-			const thisScope = this;
 			const form = {
 				localId: "form",
 				view: "autoform",
 				fields,
-				actionSave(values) {
-					const formInf = thisScope.$$("form");
+				actionSave: (values) => {
+					const formInf = this.$$("form");
 					if (formInf.validate()) {
 						if (data.exists(values.id)) {
 							data.updateItem(values.id, values);
@@ -54,12 +52,12 @@ export default class DataTableView extends JetView {
 							data.add(values);
 						}
 						formInf.clear();
-						thisScope.$$("table").clearSelection();
+						this.$$("table").clearSelection();
 					}
 				},
-				actionCancel() {
-					this.$scope.$$("form").clear();
-					this.$scope.$$("table").clearSelection();
+				actionCancel: () => {
+					this.$$("form").clear();
+					this.$$("table").clearSelection();
 				},
 				rules: this.rules
 			};

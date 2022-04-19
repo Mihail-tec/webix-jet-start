@@ -29,7 +29,7 @@ export default class ContactsList extends JetView {
 					})
 						.then(() => {
 							contactsCollection.remove(id);
-							this.$$("list").unselectAll();
+							this.list.unselectAll();
 							this.app.show("top/contacts");
 							this.app.callEvent("onAfterContactDeleted", []);
 							return false;

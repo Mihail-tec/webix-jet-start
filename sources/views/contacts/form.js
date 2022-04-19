@@ -74,23 +74,22 @@ export default class ContactsForm extends JetView {
 	}
 
 	init() {
-		const form = this.$$("form");
+		this.form = this.$$("form");
 		this.on(this.app, "onContactItemSelected", (item) => {
-			form.clearValidation();
-			form.setValues(item);
+			this.form.clearValidation();
+			this.form.setValues(item);
 		});
-		this.on(this.app, "onAfterContactDeleted", () => form.clear());
+		this.on(this.app, "onAfterContactDeleted", () => this.form.clear());
 	}
 
 	saveClick() {
-		const form = this.$$("form");
-		if (!form.validate()) {
+		if (!this.form.validate()) {
 			return;
 		}
-		const values = form.getValues();
+		const values = this.form.getValues();
 		if (!contactsCollection.exists(values.id)) {
 			contactsCollection.add(values);
-			form.clear();
+			this.form.clear();
 			this.app.callEvent("onAfterContactAdded", []);
 		}
 		else {
@@ -99,7 +98,7 @@ export default class ContactsForm extends JetView {
 	}
 
 	cancelClick() {
-		this.$$("form").clear();
+		this.form.clear();
 		this.app.callEvent("onClearContactsForm", []);
 	}
 }

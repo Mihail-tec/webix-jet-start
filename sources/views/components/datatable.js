@@ -15,7 +15,12 @@ export default class DataTableView extends JetView {
 		return this.dataItems.waitData.then(() => {
 			const data = this.dataItems;
 			const obj = data.getItem(data.getFirstId());
-			const fields = Object.keys(obj).filter(key => key !== "id");
+			const fields = Object.keys(obj).filter(key => key !== "id").map(
+				el => ({name: el, label: _(el)})
+			);
+			const save = _("Save");
+			const cancel = _("Cancel");
+			const notEmpty = _("Is not be empty");
 			const table = {
 				localId: "table",
 				view: "datatable",
@@ -23,7 +28,11 @@ export default class DataTableView extends JetView {
 				select: true,
 				onClick: {
 					"wxi-trash": (e, id) => {
-						webix.confirm(_("Are you sure?")).then(() => {
+						webix.confirm({
+							title: _("Are you sure?"),
+							ok: _("ok"),
+							cancel: _("Cancel")
+						}).then(() => {
 							data.remove(id);
 							this.$$("form").clear();
 							return false;
@@ -42,6 +51,9 @@ export default class DataTableView extends JetView {
 				localId: "form",
 				view: "autoform",
 				fields,
+				save,
+				cancel,
+				notEmpty,
 				actionSave: (values) => {
 					const formInf = this.$$("form");
 					if (formInf.validate()) {

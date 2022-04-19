@@ -15,6 +15,7 @@ export default {
 	Countries: "Countries",
 	Statuses: "Statuses",
 	Language: "Language",
+	ok: "ok",
 	"Is not be empty": "Is not be empty",
 	"Write correct email": "Write correct email",
 	"Are you sure?": "Are you sure?"

@@ -22,13 +22,18 @@ export default class ContactsList extends JetView {
 			},
 			onClick: {
 				"wxi-trash": (e, id) => {
-					webix.confirm(_("Are you sure?")).then(() => {
-						contactsCollection.remove(id);
-						this.$$("list").unselectAll();
-						this.app.show("top/contacts");
-						this.app.callEvent("onAfterContactDeleted", []);
-						return false;
-					});
+					webix.confirm({
+						title: _("Are you sure?"),
+						ok: _("ok"),
+						cancel: _("Cancel")
+					})
+						.then(() => {
+							contactsCollection.remove(id);
+							this.$$("list").unselectAll();
+							this.app.show("top/contacts");
+							this.app.callEvent("onAfterContactDeleted", []);
+							return false;
+						});
 				}
 			},
 			type: {
@@ -44,9 +49,20 @@ export default class ContactsList extends JetView {
 		}));
 	}
 
-	init(view) {
-		const list = this.$$("list");
-		list.parse(contactsCollection);
+	init() {
+		this.list = this.$$("list");
+		this.list.parse(contactsCollection);
+		this.on(this.app, "onClearContactsForm", () => {
+			this.list.unselectAll();
+		});
+		this.on(this.app, "onAfterContactAdded", () => {
+			const lastId = contactsCollection.getLastId();
+			this.app.show(`top/contacts?id=${lastId}`);
+			this.list.select(lastId);
+		});
+	}
+
+	urlChange(view) {
 		const id = this.getParam("id");
 		if (!id || !contactsCollection.exists(id)) {
 			view.select(view.data.getFirstId(), false);
@@ -54,13 +70,5 @@ export default class ContactsList extends JetView {
 		else {
 			view.select(id, false);
 		}
-		this.on(this.app, "onClearContactsForm", () => {
-			list.unselectAll();
-		});
-		this.on(this.app, "onAfterContactAdded", () => {
-			const lastId = contactsCollection.getLastId();
-			view.$scope.app.show(`top/contacts?id=${lastId}`);
-			list.select(lastId);
-		});
 	}
 }

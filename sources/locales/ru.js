@@ -15,6 +15,7 @@ export default {
 	Countries: "Страны",
 	Statuses: "Статусы",
 	Language: "Язык",
+	ok: "Да",
 	"Is not be empty": "Не должно быть пустым",
 	"Write correct email": "Напишите корректную почту",
 	"Are you sure?": "Вы уверенны?"

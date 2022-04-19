@@ -1,0 +1,21 @@
+export default {
+	App: "Приложение",
+	Data: "Данные",
+	Contacts: "Контакты",
+	Settings: "Настройки",
+	Name: "Имя",
+	Email: "Почта",
+	Icon: "Иконка",
+	Status: "Статус",
+	Country: "Страна",
+	Cancel: "Отмена",
+	Save: "Сохранить",
+	Russian: "Русский",
+	English: "Английский",
+	Countries: "Страны",
+	Statuses: "Статусы",
+	Language: "Язык",
+	"Is not be empty": "Не должно быть пустым",
+	"Write correct email": "Напишите корректную почту",
+	"Are you sure?": "Вы уверенны?"
+};

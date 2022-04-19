@@ -11,6 +11,7 @@ export default class DataTableView extends JetView {
 	}
 
 	config() {
+		const _ = this.app.getService("locale")._;
 		return this.dataItems.waitData.then(() => {
 			const data = this.dataItems;
 			const obj = data.getItem(data.getFirstId());
@@ -22,7 +23,7 @@ export default class DataTableView extends JetView {
 				select: true,
 				onClick: {
 					"wxi-trash": (e, id) => {
-						webix.confirm("Are you sure?").then(() => {
+						webix.confirm(_("Are you sure?")).then(() => {
 							data.remove(id);
 							this.$$("form").clear();
 							return false;

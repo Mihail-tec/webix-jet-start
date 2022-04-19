@@ -6,11 +6,16 @@ import DataTableView from "./components/datatable";
 
 export default class DataView extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
+		const countries = _("Countries");
+		const statuses = _("Statuses");
+		const name = _("Name");
+		const icon = _("Icon");
 		const tabbar = {
 			view: "tabbar",
 			options: [
-				{id: "countries", value: "Countries"},
-				{id: "statuses", value: "Statuses"}
+				{id: "countries", value: countries},
+				{id: "statuses", value: statuses}
 			],
 			on: {
 				onChange: id => this.$$(id).show()
@@ -18,7 +23,7 @@ export default class DataView extends JetView {
 		};
 
 		const colsCountries = [
-			{id: "Name", header: "Name", fillspace: true},
+			{id: "Name", header: name, fillspace: true},
 			{template: "{common.trashIcon()}"}
 		];
 
@@ -27,8 +32,8 @@ export default class DataView extends JetView {
 		};
 
 		const colsStatuses = [
-			{id: "Name", header: "Name", fillspace: true},
-			{id: "Icon", header: "Icon"},
+			{id: "Name", header: name, fillspace: true},
+			{id: "Icon", header: icon},
 			{template: "{common.trashIcon()}"}
 		];
 

@@ -1,0 +1,22 @@
+export default {
+	App: "App",
+	Data: "Data",
+	Contacts: "Contacts",
+	Settings: "Settings",
+	Name: "Name",
+	Email: "Email",
+	Icon: "Icon",
+	Status: "Status",
+	Country: "Country",
+	Cancel: "Cancel",
+	Save: "Save",
+	Russian: "Russian",
+	English: "English",
+	Countries: "Countries",
+	Statuses: "Statuses",
+	Language: "Language",
+	ok: "ok",
+	"Is not be empty": "Is not be empty",
+	"Write correct email": "Write correct email",
+	"Are you sure?": "Are you sure?"
+};

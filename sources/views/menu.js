@@ -1,7 +1,9 @@
-import {JetView} from "webix-jet";
+import {JetView, plugins} from "webix-jet";
 
 export default class Menu extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
+
 		return {
 			view: "menu",
 			id: "top:menu",
@@ -11,10 +13,14 @@ export default class Menu extends JetView {
 			select: true,
 			template: "<span class='webix_icon #icon#'></span> #value# ",
 			data: [
-				{value: "Contacts", id: "contacts", icon: "wxi-columns", href: "/#!/top/contacts"},
-				{value: "Data",	id: "data", icon: "wxi-pencil", href: "/#!/top/data"},
-				{value: "Settings ", id: "settings ", icon: "wxi-dots", href: "/#!/top/settings"}
+				{value: _("Contacts"), id: "contacts", icon: "wxi-columns", href: "/#!/top/contacts"},
+				{value: _("Data"),	id: "data", icon: "wxi-pencil", href: "/#!/top/data"},
+				{value: _("Settings"), id: "settings", icon: "wxi-dots", href: "/#!/top/settings"}
 			]
 		};
+	}
+
+	init() {
+		this.use(plugins.Menu, "top:menu");
 	}
 }

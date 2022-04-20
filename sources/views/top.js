@@ -6,9 +6,9 @@ import Menu from "./menu";
 export default class TopView extends JetView {
 	config() {
 		const _ = this.app.getService("locale")._;
-		const app = _("App");
+
 		const header = {
-			type: "header", template: app, css: "webix_header app_header"
+			type: "header", template: _("App"), css: "webix_header app_header"
 		};
 
 		const ui = {

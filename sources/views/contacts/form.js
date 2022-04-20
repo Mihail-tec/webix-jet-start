@@ -7,14 +7,6 @@ import statusesCollection from "../../models/statuses";
 export default class ContactsForm extends JetView {
 	config() {
 		const _ = this.app.getService("locale")._;
-		const name = _("Name");
-		const email = _("Email");
-		const status = _("Status");
-		const country = _("Country");
-		const save = _("Save");
-		const cancel = _("Cancel");
-		const notEmpty = _("Is not be empty");
-		const correctEmail = _("Write correct email");
 
 		return {
 			view: "form",
@@ -22,41 +14,41 @@ export default class ContactsForm extends JetView {
 			elements: [
 				{
 					view: "text",
-					label: name,
+					label: _("Name"),
 					name: "Name",
-					invalidMessage: notEmpty
+					invalidMessage: _("Is not be empty")
 				},
 				{
 					view: "text",
-					label: email,
+					label: _("Email"),
 					name: "Email",
-					invalidMessage: correctEmail
+					invalidMessage: _("Write correct email")
 				},
 				{
 					view: "combo",
-					label: status,
+					label: _("Status"),
 					name: "Status",
-					invalidMessage: notEmpty,
+					invalidMessage: _("Is not be empty"),
 					options: {body: {data: statusesCollection, template: "#Name#"}}
 				},
 				{
 					view: "combo",
-					label: country,
+					label: _("Country"),
 					name: "Country",
-					invalidMessage: notEmpty,
+					invalidMessage: _("Is not be empty"),
 					options: {body: {data: countriesCollection, template: "#Name#"}}
 				},
 				{
 					cols: [
 						{
 							view: "button",
-							label: save,
+							label: _("Save"),
 							css: "webix_primary",
 							click: () => this.saveClick()
 						},
 						{
 							view: "button",
-							label: cancel,
+							label: _("Cancel"),
 							css: "webix_danger",
 							click: () => this.cancelClick()
 						}
@@ -100,5 +92,9 @@ export default class ContactsForm extends JetView {
 	cancelClick() {
 		this.form.clear();
 		this.app.callEvent("onClearContactsForm", []);
+	}
+
+	urlChange() {
+		this.form.clear();
 	}
 }

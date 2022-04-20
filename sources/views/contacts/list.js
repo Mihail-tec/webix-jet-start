@@ -7,18 +7,14 @@ import statusesCollection from "../../models/statuses";
 export default class ContactsList extends JetView {
 	config() {
 		const _ = this.app.getService("locale")._;
-		const name = _("Name");
-		const email = _("Email");
-		const countryName = _("Country");
-		const statusName = _("Status");
 		return contactsCollection.waitData.then(() => ({
 			view: "list",
 			localId: "list",
 			template(obj) {
 				const country = countriesCollection.getItem(obj.Country);
 				const status = statusesCollection.getItem(obj.Status);
-				return 	`${name}: ${obj.Name}, ${email}: ${obj.Email}, 
-				${countryName}: ${country.Name}, ${statusName}: ${status.Name} <span class='webix_icon wxi-trash' style="float:right"></span>`;
+				return 	`${_("Name")}: ${obj.Name}, ${_("Email")}: ${obj.Email}, 
+				${_("Country")}: ${country.Name}, ${_("Status")}: ${status.Name} <span class='webix_icon wxi-trash' style="float:right"></span>`;
 			},
 			onClick: {
 				"wxi-trash": (e, id) => {
@@ -49,11 +45,20 @@ export default class ContactsList extends JetView {
 		}));
 	}
 
-	init() {
+	init(view) {
 		this.list = this.$$("list");
 		this.list.parse(contactsCollection);
+		const id = this.getParam("id");
+		if (!id || !contactsCollection.exists(id)) {
+			const firstId = contactsCollection.getFirstId();
+			view.select(firstId, false);
+		}
+		else {
+			view.select(id, false);
+		}
 		this.on(this.app, "onClearContactsForm", () => {
 			this.list.unselectAll();
+			this.app.show("top/contacts");
 		});
 		this.on(this.app, "onAfterContactAdded", () => {
 			const lastId = contactsCollection.getLastId();
@@ -64,8 +69,8 @@ export default class ContactsList extends JetView {
 
 	urlChange(view) {
 		const id = this.getParam("id");
-		if (!id || !contactsCollection.exists(id)) {
-			view.select(view.data.getFirstId(), false);
+		if (!contactsCollection.exists(id)) {
+			this.list.unselectAll();
 		}
 		else {
 			view.select(id, false);

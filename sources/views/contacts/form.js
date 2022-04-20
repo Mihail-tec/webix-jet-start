@@ -80,9 +80,12 @@ export default class ContactsForm extends JetView {
 		}
 		const values = this.form.getValues();
 		if (!contactsCollection.exists(values.id)) {
-			contactsCollection.add(values);
-			this.form.clear();
-			this.app.callEvent("onAfterContactAdded", []);
+			contactsCollection.waitSave(() => {
+				contactsCollection.add(values);
+			}).then((result) => {
+				values.id = result.id;
+				this.app.callEvent("onAfterContactAdded", []);
+			});
 		}
 		else {
 			contactsCollection.updateItem(values.id, values);

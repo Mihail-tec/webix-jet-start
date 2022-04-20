@@ -1,5 +1,7 @@
 import {JetView} from "webix-jet";
+
 import "./autoForm";
+import {showError} from "../server/url";
 
 export default class DataTableView extends JetView {
 	constructor(app, data, columns, rules) {
@@ -14,10 +16,11 @@ export default class DataTableView extends JetView {
 		const _ = this.app.getService("locale")._;
 		return this.dataItems.waitData.then(() => {
 			const data = this.dataItems;
-			const obj = data.getItem(data.getFirstId());
-			const fields = Object.keys(obj).filter(key => key !== "id").map(
-				el => ({name: el, label: _(el)})
-			);
+
+			const fields = this.columns
+				.filter(x => x.id).map(x => x.id)
+				.map(x => ({name: x, label: _(x)}));
+
 			const save = _("Save");
 			const cancel = _("Cancel");
 			const notEmpty = _("Is not be empty");
@@ -59,7 +62,11 @@ export default class DataTableView extends JetView {
 							data.updateItem(values.id, values);
 						}
 						else {
-							data.add(values);
+							data.waitSave(() => {
+								data.add(values);
+							}).then((result) => {
+								values.id = result.id;
+							});
 						}
 						this.form.clear();
 						this.table.clearSelection();
@@ -79,7 +86,7 @@ export default class DataTableView extends JetView {
 					form
 				]
 			};
-		});
+		}).catch(showError("Datatabe is not loaded"));
 	}
 
 	init() {

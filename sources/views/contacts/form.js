@@ -3,6 +3,8 @@ import {JetView} from "webix-jet";
 import contactsCollection from "../../models/contacts";
 import countriesCollection from "../../models/countries";
 import statusesCollection from "../../models/statuses";
+import {showError} from "../server/url";
+
 
 export default class ContactsForm extends JetView {
 	config() {
@@ -85,7 +87,7 @@ export default class ContactsForm extends JetView {
 			}).then((result) => {
 				values.id = result.id;
 				this.app.callEvent("onAfterContactAdded", []);
-			});
+			}).catch(showError("No data saved"));
 		}
 		else {
 			contactsCollection.updateItem(values.id, values);

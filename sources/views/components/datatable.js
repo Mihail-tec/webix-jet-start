@@ -18,8 +18,8 @@ export default class DataTableView extends JetView {
 			const data = this.dataItems;
 
 			const fields = this.columns
-				.filter(x => x.id).map(x => x.id)
-				.map(x => ({name: x, label: _(x)}));
+				.filter(x => x.id)
+				.map(x => ({name: x.id, label: _(x.id)}));
 
 			const save = _("Save");
 			const cancel = _("Cancel");
@@ -66,7 +66,7 @@ export default class DataTableView extends JetView {
 								data.add(values);
 							}).then((result) => {
 								values.id = result.id;
-							});
+							}).catch(showError("No data saved"));
 						}
 						this.form.clear();
 						this.table.clearSelection();

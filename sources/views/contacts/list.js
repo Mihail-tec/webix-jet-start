@@ -7,42 +7,46 @@ import statusesCollection from "../../models/statuses";
 export default class ContactsList extends JetView {
 	config() {
 		const _ = this.app.getService("locale")._;
-		return contactsCollection.waitData.then(() => ({
-			view: "list",
-			localId: "list",
-			template(obj) {
-				const country = countriesCollection.getItem(obj.Country);
-				const status = statusesCollection.getItem(obj.Status);
-				return 	`${_("Name")}: ${obj.Name}, ${_("Email")}: ${obj.Email}, 
-				${_("Country")}: ${country.Name}, ${_("Status")}: ${status.Name} <span class='webix_icon wxi-trash' style="float:right"></span>`;
-			},
-			onClick: {
-				"wxi-trash": (e, id) => {
-					webix.confirm({
-						title: _("Are you sure?"),
-						ok: _("ok"),
-						cancel: _("Cancel")
-					})
-						.then(() => {
-							contactsCollection.remove(id);
-							this.list.unselectAll();
-							this.app.show("top/contacts");
-							this.app.callEvent("onAfterContactDeleted", []);
-							return false;
-						});
+		return webix.promise.all([contactsCollection.waitData, statusesCollection.waitData]).then(
+			() => ({
+				view: "list",
+				localId: "list",
+				template: (obj) => {
+					const country = countriesCollection.getItem(obj.Country);
+					const status = statusesCollection.getItem(obj.Status);
+					const countryTwo = country ? country.Name : "non country";
+					const statusTwo = status ? status.Name : "non status";
+					return 	`${_("Name")}: ${obj.Name}, ${_("Email")}: ${obj.Email}, 
+				${_("Country")}: ${countryTwo}, ${_("Status")}: ${statusTwo} <span class='webix_icon wxi-trash' style="float:right"></span>`;
+				},
+				onClick: {
+					"wxi-trash": (e, id) => {
+						webix.confirm({
+							title: _("Are you sure?"),
+							ok: _("ok"),
+							cancel: _("Cancel")
+						})
+							.then(() => {
+								contactsCollection.remove(id);
+								this.list.unselectAll();
+								this.app.show("top/contacts");
+								this.app.callEvent("onAfterContactDeleted", []);
+								return false;
+							});
+					}
+				},
+				type: {
+					height: 80
+				},
+				select: true,
+				on: {
+					onAfterSelect: (id) => {
+						this.setParam("id", id, true);
+						this.app.callEvent("onContactItemSelected", [contactsCollection.getItem(id)]);
+					}
 				}
-			},
-			type: {
-				height: 80
-			},
-			select: true,
-			on: {
-				onAfterSelect: (id) => {
-					this.setParam("id", id, true);
-					this.app.callEvent("onContactItemSelected", [contactsCollection.getItem(id)]);
-				}
-			}
-		}));
+			})
+		);
 	}
 
 	init(view) {

@@ -1,12 +1,7 @@
-const statuses = [
-	{id: 1, Name: "Busy", Icon: "cogs"},
-	{id: 2, Name: "Open", Icon: "user"}
-];
+import {url} from "../views/server/url";
 
 const statusesCollection = new webix.DataCollection({
-	url() {
-		const promisedData = webix.promise.resolve(statuses);
-		return promisedData;
-	}
+	url: url.urlStatuses,
+	save: `rest->${url.urlStatuses}`
 });
 export default statusesCollection;

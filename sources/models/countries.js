@@ -1,13 +1,8 @@
-const countries = [
-	{id: 1, Name: "USA"},
-	{id: 2, Name: "Canada"},
-	{id: 3, Name: "Italy"}
-];
+import {url} from "../views/server/url";
 
 const countriesCollection = new webix.DataCollection({
-	url() {
-		const promisedData = webix.promise.resolve(countries);
-		return promisedData;
-	}
+	url: url.urlCountries,
+	save: `rest->${url.urlCountries}`
 });
+
 export default countriesCollection;
